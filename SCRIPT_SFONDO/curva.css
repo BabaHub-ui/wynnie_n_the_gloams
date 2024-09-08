@@ -1,0 +1,30 @@
+/* Impostazioni per l'intera pagina */
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #131313;
+    overflow: hidden;
+}
+
+/* Contenitore per la griglia di pixel */
+#pixel-grid {
+    display: grid;
+    gap: 1px; /* Spazio tra i pixel */
+    margin: 0;
+    padding: 2px;/* Bordo per evidenziare il contenitore */
+    box-sizing: border-box;
+    opacity: 1;
+    grid-template-columns: repeat(auto-fill, 10px); /* Crea colonne in base al numero di pixel */
+    grid-auto-rows: repeat(auto-fill, 10px); /* Altezza fissa per ogni riga */
+}
+
+/* Stile per ogni pixel */
+.pixel {
+    width: 10px; /* Dimensione del pixel */
+    height: 10px; /* Dimensione del pixel */
+    border-radius: 1px;
+    background-color: #ccc; /* Colore di default per i pixel */
+}
