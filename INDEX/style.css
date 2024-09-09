@@ -1,0 +1,107 @@
+/* Stile di base per il gioco */
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #e0e0e0;
+}
+
+/* Bordo base per l'area di gioco */
+#game-area {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    background-color: #ffffff;
+    border: 4px solid #000; /* Bordo di base */
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(10, 50px); /* Griglia 10x10 */
+    grid-template-rows: repeat(10, 50px); /* Griglia 10x10 */
+    margin-bottom: 20px;
+    transition: border 0.5s ease;
+}
+
+/* Bordo tratteggiato e fermo per il turno del giocatore */
+.player-turn {
+    border-style: dashed; /* Bordo tratteggiato */
+    border-color: #4CAF50; /* Colore verde */
+}
+
+/* Bordo tratteggiato e animato per il movimento */
+@keyframes movingBorderDash {
+    0% { border-style: dashed; border-color: #FFC107; border-width: 4px; }
+    50% { border-style: dashed; border-color: #FFEB3B; border-width: 8px; }
+    100% { border-style: dashed; border-color: #FFC107; border-width: 4px; }
+}
+
+/* Classe per indicare il movimento con bordo animato */
+.moving {
+    animation: movingBorderDash 1s infinite; /* Animazione continua con bordo tratteggiato */
+}
+
+/* Bordo che cambia dimensione per la vittoria */
+@keyframes winBorderSize {
+    0% { border-width: 4px; }
+    50% { border-width: 12px; }
+    100% { border-width: 4px; }
+}
+
+/* Classe per indicare la vittoria */
+.win {
+    border-style: solid; /* Bordo solido */
+    border-color: #f44336; /* Rosso */
+    animation: winBorderSize 2s infinite; /* Animazione di cambio dimensione del bordo */
+}
+
+.character {
+    position: absolute; /* Posizionamento assoluto per muoversi nella griglia */
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    transition: transform 0.1s; /* Aggiunta della transizione per il movimento con durata di 2 secondi */
+}
+
+/* Stile per le possibili mosse */
+.possible-move {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 255, 0, 0.3); /* Verde trasparente per le mosse della guardia */
+    z-index: 0; /* Dietro ai personaggi */
+    opacity: 0; /* Inizialmente trasparente */
+    transition: opacity 0.5s ease; /* Transizione per l'opacità di 0.5 secondi */
+}
+
+/* Stile per le mosse del ladro */
+.enemy-move {
+    background-color: rgba(255, 0, 0, 0.3); /* Rosso trasparente per le mosse del ladro */
+}
+
+
+.selected-move {
+    background-color: rgba(0, 255, 0, 0.7); /* Verde più intenso per la direzione selezionata */
+    opacity: 1; /* Maggiore opacità per il movimento selezionato */
+    transition: opacity 0.5s ease; /* Transizione per l'opacità di 0.5 secondi */
+}
+
+/* Stile per far apparire i quadrati delle mosse con una transizione */
+.visible {
+    opacity: 1; /* Rendere visibile gradualmente */
+}
+/* Stile per il muro */
+.wall {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: #808080; /* Grigio per rappresentare il muro */
+    z-index: 1; /* Posiziona il muro sopra la griglia di base */
+}
+#rogue, #guard {
+    transition: transform 1s ease; /* Aggiunge una transizione liscia per il movimento */
+}

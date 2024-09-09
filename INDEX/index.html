@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardie e Ladri</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-area">
+        <!-- Area di gioco -->
+        <div id="guard" class="character">🧙‍♀️</div>
+        <div id="rogue" class="character">👹</div>
+    </div>
+    <!-- Controlli sullo schermo -->
+    <div id="controls">
+        <button onclick="selectDirection('up')">Su</button>
+        <button onclick="selectDirection('left')">Sinistra</button>
+        <button onclick="selectDirection('right')">Destra</button>
+        <button onclick="selectDirection('down')">Giù</button>
+        <button onclick="confirmMove()">Via!</button>
+    </div>
+    <script src="JS/ui.js"></script>
+    <script src="JS/walls.js"></script>
+    <script src="JS/movement.js"></script>
+
+</body>
+</html>
