@@ -7,53 +7,25 @@ body {
     justify-content: center;
     height: 100vh;
     background-color: #e0e0e0;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
 }
-
-/* Bordo base per l'area di gioco */
+#border-area {
+    border: 8px solid #999; /* Bordo di base */
+    padding: 6px;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+}
 #game-area {
     position: relative;
     width: 500px;
     height: 500px;
-    background-color: #ffffff;
-    border: 4px solid #000; /* Bordo di base */
     overflow: hidden;
     display: grid;
-    grid-template-columns: repeat(10, 50px); /* Griglia 10x10 */
-    grid-template-rows: repeat(10, 50px); /* Griglia 10x10 */
-    margin-bottom: 20px;
-    transition: border 0.5s ease;
-}
-
-/* Bordo tratteggiato e fermo per il turno del giocatore */
-.player-turn {
-    border-style: dashed; /* Bordo tratteggiato */
-    border-color: #4CAF50; /* Colore verde */
-}
-
-/* Bordo tratteggiato e animato per il movimento */
-@keyframes movingBorderDash {
-    0% { border-style: dashed; border-color: #FFC107; border-width: 4px; }
-    50% { border-style: dashed; border-color: #FFEB3B; border-width: 8px; }
-    100% { border-style: dashed; border-color: #FFC107; border-width: 4px; }
-}
-
-/* Classe per indicare il movimento con bordo animato */
-.moving {
-    animation: movingBorderDash 1s infinite; /* Animazione continua con bordo tratteggiato */
-}
-
-/* Bordo che cambia dimensione per la vittoria */
-@keyframes winBorderSize {
-    0% { border-width: 4px; }
-    50% { border-width: 12px; }
-    100% { border-width: 4px; }
-}
-
-/* Classe per indicare la vittoria */
-.win {
-    border-style: solid; /* Bordo solido */
-    border-color: #f44336; /* Rosso */
-    animation: winBorderSize 2s infinite; /* Animazione di cambio dimensione del bordo */
+    grid-template-columns: repeat(10, 50px);
+    grid-template-rows: repeat(10, 50px); 
 }
 
 .character {
@@ -72,20 +44,23 @@ body {
     position: absolute;
     width: 50px;
     height: 50px;
-    background-color: rgba(0, 255, 0, 0.3); /* Verde trasparente per le mosse della guardia */
+    clip-path: circle(25% at 50% 50%);
+    background-color:  rgba(16, 111, 183, 0.4); /* Bordo interno */
     z-index: 0; /* Dietro ai personaggi */
-    opacity: 0; /* Inizialmente trasparente */
+    opacity: 0;
     transition: opacity 0.5s ease; /* Transizione per l'opacità di 0.5 secondi */
 }
 
 /* Stile per le mosse del ladro */
 .enemy-move {
-    background-color: rgba(255, 0, 0, 0.3); /* Rosso trasparente per le mosse del ladro */
+    clip-path: circle(25% at 50% 50%);
+    background-color:  rgba(60, 171, 54, 0.4); /* Bordo interno */
 }
 
 
 .selected-move {
-    background-color: rgba(0, 255, 0, 0.7); /* Verde più intenso per la direzione selezionata */
+    clip-path: circle(33% at 50% 50%);
+    background-color:  #1070b7; /* Bordo interno */
     opacity: 1; /* Maggiore opacità per il movimento selezionato */
     transition: opacity 0.5s ease; /* Transizione per l'opacità di 0.5 secondi */
 }
@@ -99,9 +74,187 @@ body {
     position: absolute;
     width: 50px;
     height: 50px;
-    background-color: #808080; /* Grigio per rappresentare il muro */
+    box-shadow: inset 0 0 0 6px #999999; /* Bordo interno */
     z-index: 1; /* Posiziona il muro sopra la griglia di base */
 }
 #rogue, #guard {
     transition: transform 1s ease; /* Aggiunge una transizione liscia per il movimento */
+}
+
+.rogue {
+    font-weight: 900;
+    font-size: 35px;
+    font-style: italic;
+    color: #3aaa35;
+    box-shadow: inset 0 0 0 6px #3aaa35; /* Bordo interno */
+}
+.bad {
+    color: #aa5c35;
+    box-shadow: inset 0 0 0 6px #aa5c35; /* Bordo interno */
+}
+#guard {
+    font-weight: 900;
+    font-size: 35px;
+    font-style: italic;
+    color: #1070b7;
+    box-shadow: inset 0 0 0 6px #1070b7; /* Bordo interno */
+}
+/* Aggiungi uno stile per il contenitore che racchiude i controlli */
+#controls-container {
+    display: flex; /* Utilizza Flexbox per affiancare i due elementi */
+    flex-wrap: wrap;
+    margin-top: 20px; /* Margine superiore per distanziare dai contenuti sopra */
+    width: 500px;
+    height: 300px;
+}
+
+#controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px; /* Spacing between rows */
+    width: 280px;
+    height: 300px;
+}
+
+#controls2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 220px;
+    height: 300px;
+    gap: 10px; /* Spazio tra i bottoni all'interno di controls2 */
+}
+
+.top-row,
+.middle-row,
+.bottom-row {
+    display: flex; /* Usa Flexbox per allineare i pulsanti sulla stessa riga */
+    justify-content: center; /* Centro gli elementi orizzontalmente */
+    align-items: center; /* Assicura che tutti gli elementi siano allineati verticalmente */
+    margin: 0; /* Rimuovi qualsiasi margine extra */
+    padding: 0; /* Rimuovi qualsiasi padding extra */
+}
+
+.svg-button,
+.svg-button-side,
+.svg-button-diagonal {
+    margin: 0 5px; /* Aggiungi un margine laterale opzionale per separare i pulsanti */
+}
+.middle-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px; /* Spacing between buttons in the middle row */
+}
+
+
+.svg-button {
+    border: none; /* Rimuove i bordi del bottone */
+    outline: none; /* Rimuove l'outline di focus */
+    background: none; /* Rimuove lo sfondo */
+    padding: 0;
+    cursor: pointer; /* Cambia il cursore in puntatore */
+    width: 80px; /* Larghezza uniforme per tutti i pulsanti */
+    height: 100px; /* Altezza uniforme per tutti i pulsanti */
+    display: flex; /* Utilizza Flexbox */
+    align-items: center; /* Centra verticalmente il contenuto */
+    justify-content: center; /* Centra orizzontalmente il contenuto */
+}
+.svg-button-diagonal {
+    border: none; /* Rimuove i bordi del bottone */
+    outline: none; /* Rimuove l'outline di focus */
+    background: none; /* Rimuove lo sfondo */
+    padding: 0;
+    cursor: pointer; /* Cambia il cursore in puntatore */
+    width: 80px; /* Larghezza uniforme per tutti i pulsanti */
+    height: 100px; /* Altezza uniforme per tutti i pulsanti */
+    display: flex; /* Utilizza Flexbox */
+    align-items: center; /* Centra verticalmente il contenuto */
+    justify-content: center; /* Centra orizzontalmente il contenuto */
+}
+.svg-button-side {
+    border: none; /* Rimuove i bordi del bottone */
+    outline: none; /* Rimuove l'outline di focus */
+    background: none; /* Rimuove lo sfondo */
+    padding: 0;
+    cursor: pointer; /* Cambia il cursore in puntatore */
+    width:100px; /* Larghezza uniforme per tutti i pulsanti */
+    height: 80px; /* Altezza uniforme per tutti i pulsanti */
+}
+/* Rotazioni per le direzioni diagonali */
+.rotate-45 {
+    transform: rotate(45deg);
+}
+
+.rotate-135 {
+    transform: rotate(135deg);
+}
+
+.rotate-225 {
+    transform: rotate(225deg);
+}
+
+.rotate-315 {
+    transform: rotate(315deg);
+}
+
+#go {
+    font-weight: 900;
+    font-size: 35px;
+    text-transform: uppercase;
+    font-family: "Montserrat", sans-serif;
+    padding: 10px 25px;
+    border-radius: 20px;
+    background-color: #82368c;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.arrow {
+    fill: #82368c;
+}
+
+.icon {
+    width: 80px; /* Dimensione dell'SVG per mantenere proporzioni uniformi */
+    height:80px;
+    transition: filter 0.5s ease, transform 0.2s ease; /* Transizione per l'ombra e il movimento */ 
+}
+.icon-diagonal {
+    width: 60px; /* Dimensione dell'SVG per mantenere proporzioni uniformi */
+    height:60px;
+    transition: filter 0.5s ease, transform 0.5s ease; /* Transizione per l'ombra e il movimento */ 
+}
+.svg-button, .svg-button-side, .svg-button-diagonal, .number-button, #go {
+    transition: filter 0.5s ease; /* Transizione uniforme per tutte le proprietà */
+    filter: drop-shadow(1px 6px 0px rgb(0, 0, 0)); /* Ombra dura di base */
+}
+
+.svg-button.active, .svg-button-side.active, .svg-button-diagonal.active, .number-button.active, #go.active {
+    transform: translateY(3px); /* Effetto di pressione */
+    filter: drop-shadow(1px 4px 0px rgb(0, 0, 0)); /* Rimuove l'ombra per effetto di pressione */
+}
+d
+d
+.power-up {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%); /* Trasforma per centrare */
+}
+.power-up.sprint {
+    background-color: green;
+}
+
+.power-up.breakWall {
+    background-color: orange;
+}
+
+.power-up.calmMind {
+    background-color: purple;
+}
+
+.power-up.freeze {
+    background-color: blue;
 }

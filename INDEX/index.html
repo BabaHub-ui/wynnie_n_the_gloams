@@ -3,26 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Guardie e Ladri</title>
     <link rel="stylesheet" href="style.css">
+    <svg width="0" height="0" style="position: absolute;">
+        <filter id="path-shadow">
+            <feDropShadow dx="0" dy="2" stdDeviation="0" flood-color="#000000"/>
+        </filter>
+    </svg>
 </head>
 <body>
+    <div id="game-stats">
+        <p>Turni: <span id="turn-counter">0</span></p>
+        <p>Livelli: <span id="level-counter">1</span></p>
+        <p>Gauge del Ladro: <span id="rogue-gauge">0</span></p>
+    </div>    
+    <div id="border-area">
     <div id="game-area">
         <!-- Area di gioco -->
-        <div id="guard" class="character">🧙‍♀️</div>
-        <div id="rogue" class="character">👹</div>
+        <div id="guard" class="character">G</div>
+        <div id="rogue" class="character rogue">R</div>
     </div>
-    <!-- Controlli sullo schermo -->
-    <div id="controls">
-        <button onclick="selectDirection('up')">Su</button>
-        <button onclick="selectDirection('left')">Sinistra</button>
-        <button onclick="selectDirection('right')">Destra</button>
-        <button onclick="selectDirection('down')">Giù</button>
-        <button onclick="confirmMove()">Via!</button>
     </div>
+    <div id="controls-container">
+        <!-- Contenitore dei controlli di movimento -->
+        <div id="controls">
+            <div class="top-row">
+                <button id="up-left" class="svg-button-diagonal">
+                    <svg class="icon-diagonal rotate-315" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.17 25.51">
+                        <path class="arrow" d="M0,18.44V1.14C0,.51.73,0,1.62,0h10.93c.9,0,1.62.51,1.62,1.14v17.31c0,.22-.09.43-.26.62l-5.47,5.93c-.64.69-2.09.69-2.73,0L.26,19.06c-.17-.18-.26-.4-.26-.62Z"/>
+                    </svg>
+                </button>
+                <button id="up" class="svg-button">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.17 25.51">
+                        <path class="arrow" d="M0,18.44V1.14C0,.51.73,0,1.62,0h10.93c.9,0,1.62.51,1.62,1.14v17.31c0,.22-.09.43-.26.62l-5.47,5.93c-.64.69-2.09.69-2.73,0L.26,19.06c-.17-.18-.26-.4-.26-.62Z"/>
+                    </svg>
+                </button>
+                <button id="up-right" class="svg-button-diagonal">
+                    <svg class="icon-diagonal rotate-45" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.17 25.51">
+                        <path class="arrow" d="M0,18.44V1.14C0,.51.73,0,1.62,0h10.93c.9,0,1.62.51,1.62,1.14v17.31c0,.22-.09.43-.26.62l-5.47,5.93c-.64.69-2.09.69-2.73,0L.26,19.06c-.17-.18-.26-.4-.26-.62Z"/>
+                    </svg>
+                </button>
+            </div>
+        
+            <div class="middle-row">
+                <button id="sx" class="svg-button-side">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.51 14.17">
+                        <path class="arrow" d="M18.44,14.17H1.14c-.63,0-1.14-.73-1.14-1.62V1.62C0,.73.51,0,1.14,0h17.31c.22,0,.43.09,.62,.26l5.93,5.47c.69,.64.69,2.09,0,2.73l-5.93,5.46c-.18,.17-.4,.26-.62,.26Z"/>
+                    </svg>
+                </button>
+                <button id="dx" class="svg-button-side">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.51 14.17">
+                        <path class="arrow" d="M7.07,0h17.31c.63,0,1.14.73,1.14,1.62v10.93c0,.9-.51,1.62-1.14,1.62H7.07c-.22,0-.43-.09-.62-.26L.52,8.45c-.69-.64-.69-2.09,0-2.73L6.45.26c.18-.17.4-.26.62-.26Z"/>
+                    </svg>
+                </button>
+            </div>
+        
+            <div class="bottom-row">
+                <button id="down-left" class="svg-button-diagonal">
+                    <svg class="icon-diagonal rotate-225" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.17 25.51">
+                        <path class="arrow" d="M0,18.44V1.14C0,.51.73,0,1.62,0h10.93c.9,0,1.62.51,1.62,1.14v17.31c0,.22-.09.43-.26.62l-5.47,5.93c-.64.69-2.09.69-2.73,0L.26,19.06c-.17-.18-.26-.4-.26-.62Z"/>
+                    </svg>
+                </button>
+                <button id="down" class="svg-button">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.17 25.51">
+                        <path class="arrow" d="M14.17,7.07v17.31c0,.63-.73,1.14-1.62,1.14H1.62c-.9,0-1.62-.51-1.62-1.14V7.07c0-.22.09-.43.26-.62L5.73.52c.64-.69,2.09-.69,2.73,0l5.46,5.93c.17,.18,.26.4,.26.62Z"/>
+                    </svg>
+                </button>
+                <button id="down-right" class="svg-button-diagonal">
+                    <svg class="icon-diagonal rotate-135" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.17 25.51">
+                        <path class="arrow" d="M0,18.44V1.14C0,.51.73,0,1.62,0h10.93c.9,0,1.62.51,1.62,1.14v17.31c0,.22-.09.43-.26.62l-5.47,5.93c-.64.69-2.09.69-2.73,0L.26,19.06c-.17-.18-.26-.4-.26-.62Z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Contenitore per altri pulsanti -->
+        <div id="controls2">
+            <div class="bottommest-row">
+                <button id="go">Go</button>
+            </div>
+            <div class="number-buttons">
+                <button id="num1" class="number-button">1</button>
+                <button id="num2" class="number-button">2</button>
+                <button id="num3" class="number-button">3</button>
+                <button id="num4" class="number-button">4</button>
+            </div>
+        </div>
+    </div>
+    <script src="JS/handlekey.js"></script>
     <script src="JS/ui.js"></script>
     <script src="JS/walls.js"></script>
-    <script src="JS/movement.js"></script>
+    <script src="JS/stats.js"></script>>
+    <script src="JS/move.js"></script>
 
 </body>
 </html>
